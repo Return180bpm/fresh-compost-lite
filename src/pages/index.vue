@@ -3,7 +3,14 @@ import { storeToRefs } from 'pinia'
 import { useShoppingItemsStore } from '~/stores/shoppingItems'
 const shoppingItemsStore = useShoppingItemsStore()
 const { items } = storeToRefs(shoppingItemsStore)
+const newItem = ref('')
+function addItem() {
+  if (!newItem.value)
+    return
 
+  shoppingItemsStore.addItem(newItem.value)
+  newItem.value = ''
+}
 // const router = useRouter()
 // const go = () => {
 //   if (name)
@@ -12,11 +19,24 @@ const { items } = storeToRefs(shoppingItemsStore)
 </script>
 
 <template>
-  <!-- <input v-model="item" placeholder="I need to get..." class="px-6 py-10 text-3xl bg-light-300 rounded-3xl"> -->
+  <input v-model="newItem" placeholder="I need to get..." class="px-6 py-10 text-3xl bg-light-300 rounded-3xl">
+  <button
+    type="button"
+    @click="addItem"
+  >
+    Add
+  </button>
 
   <ul>
     <li v-for="item in items" :key="item.id">
       {{ item.text }} {{ item.id }} {{ item.isChecked }}
+      <button
+        type="button"
+        class="px-6 py-4  bg-light-50"
+        @click="shoppingItemsStore.removeItem(item.id)"
+      >
+        Remove
+      </button>
       <!-- <TodoItem :id="{item.id}" text="item.text" /> -->
     </li>
   </ul>
