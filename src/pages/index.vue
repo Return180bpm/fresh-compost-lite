@@ -21,7 +21,7 @@ function addItem() {
 <template>
   <div class="flex flex-col gap-16 max-w-screen-sm">
     <div class="flex justify-center gap-2 h-36 p-0">
-      <input v-model="newItem" placeholder="I need to get..." class="h-full px-6 text-3xl bg-light-300 rounded-2xl">
+      <input v-model="newItem" placeholder="I need to get..." class="h-full px-6 text-3xl bg-light-300 rounded-2xl" @keyup.enter="addItem">
       <button
         type="button"
         class="h-full w-32 text-2xl text-gray-500 bg-lime-200 rounded-2xl"
