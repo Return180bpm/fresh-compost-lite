@@ -32,6 +32,8 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
     return ++lastId.value
   }
   const indexOfItem = (id: number) => items.value.findIndex((item: Item) => item.id === id)
+  const checkedItemsIds = computed(() => items.value.filter(item => item.isChecked === true).map(item => String(item.id)))
+
   function addItem(text: string) {
     items.value.push({
       id: nextId(),
@@ -51,5 +53,5 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
       items.value[id].isChecked = !items.value[id].isChecked
   }
 
-  return { items, addItem, removeItem, updateItem }
+  return { items, checkedItemsIds, addItem, removeItem, updateItem }
 })

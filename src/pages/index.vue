@@ -2,9 +2,8 @@
 import { storeToRefs } from 'pinia'
 import { useShoppingItemsStore } from '~/stores/shoppingItems'
 const shoppingItemsStore = useShoppingItemsStore()
-const { items } = storeToRefs(shoppingItemsStore)
+const { items, checkedItemsIds } = storeToRefs(shoppingItemsStore)
 const newItem = ref('')
-// const checked = ref([]o)
 function addItem() {
   if (!newItem.value)
     return
@@ -30,7 +29,7 @@ function addItem() {
 
   <ul>
     <li v-for="item in items" :key="item.id">
-      <input id="item.id" type="checkbox" :value="item.isChecked" :checked="item.isChecked" class="w-6 h-6" @click="shoppingItemsStore.updateItem(item.id)">
+      <input v-model="checkedItemsIds" :value="item.id" type="checkbox" class="w-6 h-6" @click="shoppingItemsStore.updateItem(item.id)">
       {{ item.text }} {{ item.id }} {{ item.isChecked }}
       <button
         type="button"
