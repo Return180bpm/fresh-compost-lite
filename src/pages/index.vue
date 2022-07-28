@@ -19,26 +19,32 @@ function addItem() {
 </script>
 
 <template>
-  <input v-model="newItem" placeholder="I need to get..." class="px-6 py-10 text-3xl bg-light-300 rounded-3xl">
-  <button
-    type="button"
-    @click="addItem"
-  >
-    Add
-  </button>
-
-  <ul>
-    <li v-for="item in items" :key="item.id">
-      <input v-model="checkedItemsIds" :value="item.id" type="checkbox" class="w-6 h-6" @click="shoppingItemsStore.updateItem(item.id)">
-      {{ item.text }} {{ item.id }} {{ item.isChecked }}
+  <div class="flex flex-col gap-16 max-w-screen-sm">
+    <div class="flex justify-center gap-2 h-36 p-0">
+      <input v-model="newItem" placeholder="I need to get..." class="h-full px-6 text-3xl bg-light-300 rounded-2xl">
       <button
         type="button"
-        class="px-6 py-4  bg-light-50"
-        @click="shoppingItemsStore.removeItem(item.id)"
+        class="h-full w-32 text-2xl text-gray-500 bg-lime-200 rounded-2xl"
+        @click="addItem"
       >
-        Remove
+        Add
       </button>
-      <!-- <TodoItem :id="{item.id}" text="item.text" /> -->
-    </li>
-  </ul>
+    </div>
+    <ul class="flex flex-col gap-4">
+      <li v-for="item in items" :key="item.id" class="h-24 flex items-center p-4 gap-6 text-3xl">
+        <input v-model="checkedItemsIds" :value="item.id" type="checkbox" class="w-12 h-12 rounded-2xl" @click="shoppingItemsStore.updateItem(item.id)">
+        <span class="text-gray-500">
+          {{ item.text }}
+        </span>
+        <button
+          type="button"
+          class="ml-auto px-6 py-4 rounded-2xl bg-light-200"
+          @click="shoppingItemsStore.removeItem(item.id)"
+        >
+          x
+        </button>
+        <!-- <TodoItem :id="{item.id}" text="item.text" /> -->
+      </li>
+    </ul>
+  </div>
 </template>
