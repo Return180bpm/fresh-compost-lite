@@ -17,7 +17,7 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
     {
       id: 1,
       text: 'onions',
-      isChecked: false,
+      isChecked: true,
       pictureURL: 'foo',
     },
     {
@@ -31,6 +31,7 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
   function nextId() {
     return ++lastId.value
   }
+  const indexOfItem = (id: number) => items.value.findIndex((item: Item) => item.id === id)
   function addItem(text: string) {
     items.value.push({
       id: nextId(),
@@ -40,10 +41,15 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
     })
   }
   function removeItem(id: number) {
-    const i = items.value.findIndex((item: Item) => item.id === id)
+    const i = indexOfItem(id)
     if (i > -1)
       items.value.splice(i, 1)
   }
+  function updateItem(id: number) {
+    const i = indexOfItem(id)
+    if (i > -1)
+      items.value[id].isChecked = !items.value[id].isChecked
+  }
 
-  return { items, addItem, removeItem }
+  return { items, addItem, removeItem, updateItem }
 })
