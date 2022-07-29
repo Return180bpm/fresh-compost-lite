@@ -47,4 +47,7 @@ function addItem() {
       </li>
     </ul>
   </div>
+  <button @click="useFetchUnsplash(`photos?per_page=1&orientation=squarish&query=potato`)">
+    get
+  </button>
 </template>
