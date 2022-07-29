@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useLocalStorage } from '@vueuse/core'
 
 interface Item {
   id: number
@@ -7,7 +8,7 @@ interface Item {
   pictureURL: string
 }
 export const useShoppingItemsStore = defineStore('shoppingItems', () => {
-  const items = ref<Item[]>([
+  const items = useLocalStorage('shopping-items', [
     {
       id: 0,
       text: 'tomatos',
@@ -27,7 +28,8 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
       pictureURL: 'foo',
     },
   ])
-  const lastId = ref(2)
+  const lastId = ref(Math.max(...items.value.map(item => item.id)))
+
   function nextId() {
     return ++lastId.value
   }
