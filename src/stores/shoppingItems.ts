@@ -36,8 +36,8 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
   }
   const indexOfItem = (id: number) => items.value.findIndex((item: Item) => item.id === id)
   const checkedItemsIds = computed(() => items.value.filter(item => item.isChecked === true).map(item => String(item.id)))
-  const unsplashResponse: Ref<string | null> = ref(null)
 
+  // Keeping this in case I need it
   interface UnsplashSingleResult {
     alt_description: string
     blur_hash: string
@@ -56,54 +56,39 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
     tags: any[]
     topic_submissions: any
     updated_at: string
-    urls: object
+    urls: {
+      thumb: string
+    }
     user: object
     width: number
   }
   interface UnsplashResponse {
-    results: []
+    results: UnsplashSingleResult[]
     total: number
     total_pages: number
   }
 
-  function addItem(text: string) {
-    const { data }: { data: Ref<UnsplashResponse | null> } = useFetchUnsplashSearch(`photos?per_page=1&orientation=squarish&query=${text}`, {
-      async afterFetch(ctx) {
-        let myUrl
-        if (ctx.data.results.length === 0) {
-          // This doesn't work and I hate debugging this
-          // const { data }: { data: any } = useFetchUnsplashRandom('random?per_page=1&orientation=squarish').json()
-          // myUrl = data.value.urls.thumb
-          myUrl = undefined
-        }
-        else { myUrl = ctx.data.results[0].urls.thumb }
+  async function addItem(text: string) {
+    const { data }: { data: Ref<UnsplashResponse | null> } = await useFetchUnsplashSearch(`photos?per_page=1&orientation=squarish&query=${text}`).json()
 
-        // should this be in afterFetch?
-        // Ideally, I would like the item to be visibly added to the list right away and the image appearing whenever
-        items.value.unshift({
-          id: nextId(),
-          text,
-          isChecked: false,
-          pictureURL: myUrl,
-        })
-        return ctx
-      },
-    }).json()
-
-    // First attempt. I don't know anything anymore
-    // const dataParsed = computed(() => {
-    //   try {
-    //     return JSON.parse(data.value as string)
-    //   }
-    //   catch (e) {
-    //     return null
-    //   }
-    // })
-    // const getPictureURL = () => {
-    //   if (dataParsed === null)
-    //     return undefined
-    //   else return dataParsed.results[0].urls.thumb
-    // }
+    let myUrl: string | null
+    if (data!.value!.results.length === 0) {
+      // This doesn't work and I hate debugging this
+      // const { data }: { data: any } = useFetchUnsplashRandom('random?per_page=1&orientation=squarish').json()
+      // myUrl = data.value.urls.thumb
+      myUrl = null
+    }
+    else {
+      if (data !== undefined)
+        myUrl = data!.value!.results[0].urls.thumb
+      else myUrl = null
+    }
+    items.value.unshift({
+      id: nextId(),
+      text,
+      isChecked: false,
+      pictureURL: myUrl,
+    })
   }
   function removeItem(id: number) {
     const i = indexOfItem(id)
