@@ -10,19 +10,19 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
   const items = ref<Item[]>([
     {
       id: 0,
-      text: 'tomatoes',
+      text: 'tomatos',
       isChecked: false,
       pictureURL: 'foo',
     },
     {
       id: 1,
-      text: 'onions',
-      isChecked: true,
+      text: 'tomatoes',
+      isChecked: false,
       pictureURL: 'foo',
     },
     {
       id: 2,
-      text: 'butter',
+      text: 'ketchup',
       isChecked: false,
       pictureURL: 'foo',
     },
@@ -35,7 +35,7 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
   const checkedItemsIds = computed(() => items.value.filter(item => item.isChecked === true).map(item => String(item.id)))
 
   function addItem(text: string) {
-    items.value.push({
+    items.value.unshift({
       id: nextId(),
       text,
       isChecked: false,
@@ -48,9 +48,11 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
       items.value.splice(i, 1)
   }
   function updateItem(id: number) {
+    // console.log(`id is ${id}`)
+
     const i = indexOfItem(id)
     if (i > -1)
-      items.value[id].isChecked = !items.value[id].isChecked
+      items.value[i].isChecked = !items.value[i].isChecked
   }
 
   return { items, checkedItemsIds, addItem, removeItem, updateItem }
