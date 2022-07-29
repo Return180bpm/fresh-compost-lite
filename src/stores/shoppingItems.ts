@@ -68,8 +68,15 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
     total_pages: number
   }
 
+  const isFetchingImage = ref(false)
   async function addItem(text: string) {
-    const { data }: { data: Ref<UnsplashResponse | null> } = await useFetchUnsplashSearch(`photos?per_page=1&orientation=squarish&query=${text}`).json()
+    const { data, isFetching, execute }: { data: Ref<UnsplashResponse | null>; isFetching: Ref<boolean>; execute: () => Promise<any> } = useFetchUnsplashSearch(`photos?per_page=1&orientation=squarish&query=${text}`, {
+      immediate: false,
+    },
+    ).json()
+
+    syncRef(isFetching, isFetchingImage)
+    await execute()
 
     let myUrl: string | null
     if (data!.value!.results.length === 0) {
@@ -101,5 +108,5 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
       items.value[i].isChecked = !items.value[i].isChecked
   }
 
-  return { items, checkedItemsIds, addItem, removeItem, updateItem }
+  return { items, checkedItemsIds, addItem, removeItem, updateItem, isFetchingImage }
 })

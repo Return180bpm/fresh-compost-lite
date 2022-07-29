@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useShoppingItemsStore } from '~/stores/shoppingItems'
 
 const shoppingItemsStore = useShoppingItemsStore()
-const { items, checkedItemsIds } = storeToRefs(shoppingItemsStore)
+const { items, checkedItemsIds, isFetchingImage } = storeToRefs(shoppingItemsStore)
 const newItem = ref('')
 function addItem() {
   if (!newItem.value)
@@ -35,6 +35,7 @@ function addItem() {
       </button>
     </div>
     <ul class="flex flex-col gap-4">
+      <li v-if="isFetchingImage" class="h-24 w-full bg-white" />
       <li v-for="item in items" :key="item.id" class="h-24 flex items-center p-4 gap-6 text-3xl">
         <img v-if="item.pictureURL" :src="item.pictureURL" :alt="`A random picture of a ${item.text}`" class="w-12 h-12">
         <div v-else class="w-12 h12 opacity-0" />
