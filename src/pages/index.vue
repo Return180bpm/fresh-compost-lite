@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+// import { stringify } from '@vueuse/docs-utils'
 import { useShoppingItemsStore } from '~/stores/shoppingItems'
+
 const shoppingItemsStore = useShoppingItemsStore()
 const { items, checkedItemsIds } = storeToRefs(shoppingItemsStore)
 const newItem = ref('')
@@ -11,6 +13,8 @@ function addItem() {
   shoppingItemsStore.addItem(newItem.value)
   newItem.value = ''
 }
+
+// const text = stringify(shoppingItemsStore.unsplashResponse)
 // const router = useRouter()
 // const go = () => {
 //   if (name)
@@ -32,6 +36,8 @@ function addItem() {
     </div>
     <ul class="flex flex-col gap-4">
       <li v-for="item in items" :key="item.id" class="h-24 flex items-center p-4 gap-6 text-3xl">
+        <img v-if="item.pictureURL" :src="item.pictureURL" :alt="`A random picture of a ${item.text}`" class="w-12 h-12">
+        <div v-else class="w-12 h12 opacity-0" />
         <input v-model="checkedItemsIds" :value="item.id" type="checkbox" class="w-12 h-12 rounded-2xl" @click="shoppingItemsStore.updateItem(item.id)">
         <span class="text-gray-500">
           {{ item.text }}
@@ -47,7 +53,4 @@ function addItem() {
       </li>
     </ul>
   </div>
-  <button @click="useFetchUnsplash(`photos?per_page=1&orientation=squarish&query=potato`)">
-    get
-  </button>
 </template>
