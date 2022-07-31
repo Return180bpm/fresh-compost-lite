@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-// import { stringify } from '@vueuse/docs-utils'
 import { useShoppingItemsStore } from '~/stores/shoppingItems'
 
 const shoppingItemsStore = useShoppingItemsStore()
@@ -13,13 +12,6 @@ function addItem() {
   shoppingItemsStore.addItem(newItem.value)
   newItem.value = ''
 }
-
-// const text = stringify(shoppingItemsStore.unsplashResponse)
-// const router = useRouter()
-// const go = () => {
-//   if (name)
-//     router.push(`/hi/${encodeURIComponent(name)}`)
-// }
 </script>
 
 <template>

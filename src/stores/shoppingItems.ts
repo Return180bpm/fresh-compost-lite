@@ -7,7 +7,7 @@ interface Item {
   id: number
   text: string
   isChecked: boolean
-  pictureURL: string | null
+  pictureURL: string
 }
 export const useShoppingItemsStore = defineStore('shoppingItems', () => {
   const items: Ref<Item[]> = useLocalStorage('shopping-items', [
@@ -15,19 +15,19 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
       id: 0,
       text: 'tomatos',
       isChecked: false,
-      pictureURL: 'https://images.unsplash.com/photo-1617130094141-532436117aa1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNTA3MjR8MHwxfHNlYXJjaHwxfHxwb3RhdG98ZW58MHwyfHx8MTY1OTEwODU4NQ&ixlib=rb-1.2.1&q=80&w=200',
+      pictureURL: '',
     },
     {
       id: 1,
       text: 'tomatoes',
       isChecked: false,
-      pictureURL: null,
+      pictureURL: '',
     },
     {
       id: 2,
       text: 'ketchup',
       isChecked: false,
-      pictureURL: null,
+      pictureURL: '',
     },
   ])
   const lastId = ref(Math.max(...items.value.map(item => item.id)))
@@ -37,7 +37,6 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
   const indexOfItem = (id: number) => items.value.findIndex((item: Item) => item.id === id)
   const checkedItemsIds = computed(() => items.value.filter(item => item.isChecked === true).map(item => String(item.id)))
 
-  // Keeping this in case I need it
   interface UnsplashSingleResult {
     alt_description: string
     blur_hash: string
@@ -78,17 +77,17 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
     syncRef(isFetching, isFetchingImage)
     await execute()
 
-    let myUrl: string | null
+    let myUrl: string
     if (data!.value!.results.length === 0) {
       // This doesn't work and I hate debugging this
       // const { data }: { data: any } = useFetchUnsplashRandom('random?per_page=1&orientation=squarish').json()
       // myUrl = data.value.urls.thumb
-      myUrl = null
+      myUrl = ''
     }
     else {
       if (data !== undefined)
         myUrl = data!.value!.results[0].urls.thumb
-      else myUrl = null
+      else myUrl = ''
     }
     items.value.unshift({
       id: nextId(),
