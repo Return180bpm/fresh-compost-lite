@@ -55,13 +55,18 @@ function addItem() {
 .list-move,
 .list-enter-active,
 .list-leave-active {
-  transition: all 1.5s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: all 0.4s cubic-bezier(0.1, 0.8, 0.1, 1);
 }
 
 /* 2. declare enter from and leave to state */
-.list-enter-from,
+.list-enter-from
+ {
+  opacity: 0;
+  transform: translate(0, -100px);
+}
 .list-leave-to {
-  transform: translate(500px, 0);
+  opacity: 0;
+  transform: translate(100px, 0);
 }
 
 /* 3. ensure leaving items are taken out of layout flow so that moving
