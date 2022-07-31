@@ -30,7 +30,7 @@ function addItem() {
       <!-- <li v-if="isFetchingImage" class="h-24 w-full bg-white">
         Fetching image
       </li> -->
-      <li v-for="item in items" :key="item.id" class="h-24 w-full flex items-center p-4 gap-6 text-3xl ">
+      <li v-for="item in items" :key="item.id" class="h-24 w-full flex items-center p-4 gap-6 text-3xl">
         <img v-if="item.pictureURL" :src="item.pictureURL" :alt="`A random picture of a ${item.text}`" class="w-12 h-12">
         <div v-else class="w-12 h12 opacity-0" />
         <input v-model="checkedItemsIds" :value="item.id" type="checkbox" class="w-12 h-12 rounded-2xl" @click="shoppingItemsStore.updateItem(item.id)">
