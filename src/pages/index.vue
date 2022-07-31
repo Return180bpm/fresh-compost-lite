@@ -51,14 +51,15 @@ function addItem() {
 </template>
 
 <style>
-/* 1. declare transition */
 .list-move,
-.list-enter-active,
-.list-leave-active {
+.list-enter-active
+ {
   transition: all 0.4s cubic-bezier(0.1, 0.8, 0.1, 1);
 }
+.list-leave-active {
+  transition: all 0.4s cubic-bezier(.05,.76,.03,.89)
+}
 
-/* 2. declare enter from and leave to state */
 .list-enter-from
  {
   opacity: 0;
@@ -66,7 +67,7 @@ function addItem() {
 }
 .list-leave-to {
   opacity: 0;
-  transform: translate(100px, 0);
+  transform: translate(1000px, 0);
 }
 
 /* 3. ensure leaving items are taken out of layout flow so that moving
