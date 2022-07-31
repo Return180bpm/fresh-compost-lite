@@ -26,9 +26,11 @@ function addItem() {
         Add
       </button>
     </div>
-    <ul class="flex flex-col gap-4">
-      <li v-if="isFetchingImage" class="h-24 w-full bg-white" />
-      <li v-for="item in items" :key="item.id" class="h-24 flex items-center p-4 gap-6 text-3xl">
+    <TransitionGroup tag="ul" name="list" class="flex flex-col gap-4">
+      <!-- <li v-if="isFetchingImage" class="h-24 w-full bg-white">
+        Fetching image
+      </li> -->
+      <li v-for="item in items" :key="item.id" class="h-24 w-full flex items-center p-4 gap-6 text-3xl ">
         <img v-if="item.pictureURL" :src="item.pictureURL" :alt="`A random picture of a ${item.text}`" class="w-12 h-12">
         <div v-else class="w-12 h12 opacity-0" />
         <input v-model="checkedItemsIds" :value="item.id" type="checkbox" class="w-12 h-12 rounded-2xl" @click="shoppingItemsStore.updateItem(item.id)">
@@ -44,6 +46,27 @@ function addItem() {
         </button>
         <!-- <TodoItem :id="{item.id}" text="item.text" /> -->
       </li>
-    </ul>
+    </TransitionGroup>
   </div>
 </template>
+
+<style>
+/* 1. declare transition */
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 1.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+/* 2. declare enter from and leave to state */
+.list-enter-from,
+.list-leave-to {
+  transform: translate(500px, 0);
+}
+
+/* 3. ensure leaving items are taken out of layout flow so that moving
+      animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
+}
+</style>
