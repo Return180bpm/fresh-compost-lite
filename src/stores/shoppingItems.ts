@@ -80,17 +80,20 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
 
     // Can I do this whole thing with computed?
     let myUrl: string
-    if (data!.value!.results.length === 0) {
-      const { data, isFetching, execute }: { data: Ref<any | null>; isFetching: Ref<boolean>; execute: () => Promise<any> } = useFetchUnsplashRandom('random?per_page=1&orientation=squarish').json()
-      syncRef(isFetching, isFetchingImage)
-      await execute()
+    if (data.value !== null) {
+      if (data.value.results.length === 0) {
+        const { data, isFetching, execute }: { data: Ref<any | null>; isFetching: Ref<boolean>; execute: () => Promise<any> } = useFetchUnsplashRandom('random?per_page=1&orientation=squarish').json()
+        syncRef(isFetching, isFetchingImage)
+        await execute()
 
-      myUrl = data!.value!.urls!.thumb
+        myUrl = data!.value!.urls!.thumb
+      }
+      else {
+        myUrl = data!.value!.results[0].urls.thumb
+      }
     }
     else {
-      if (data !== undefined)
-        myUrl = data!.value!.results[0].urls.thumb
-      else myUrl = ''
+      myUrl = ''
     }
     items.value.unshift({
       id: nextId(),
