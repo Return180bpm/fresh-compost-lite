@@ -74,15 +74,18 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
     },
     ).json()
 
+    // Is there a simpler way to return isFetching from the store? Currying this function? (but then how do you pass in `text`?)
     syncRef(isFetching, isFetchingImage)
     await execute()
 
+    // Can I do this whole thing with computed?
     let myUrl: string
     if (data!.value!.results.length === 0) {
-      // This doesn't work and I hate debugging this
-      // const { data }: { data: any } = useFetchUnsplashRandom('random?per_page=1&orientation=squarish').json()
-      // myUrl = data.value.urls.thumb
-      myUrl = ''
+      const { data, isFetching, execute }: { data: Ref<any | null>; isFetching: Ref<boolean>; execute: () => Promise<any> } = useFetchUnsplashRandom('random?per_page=1&orientation=squarish').json()
+      syncRef(isFetching, isFetchingImage)
+      await execute()
+
+      myUrl = data!.value!.urls!.thumb
     }
     else {
       if (data !== undefined)
