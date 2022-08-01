@@ -27,9 +27,11 @@ function addItem() {
       </button>
     </div>
     <TransitionGroup tag="ul" name="list" class="flex flex-col gap-4">
-      <!-- <li v-if="isFetchingImage" class="h-24 w-full bg-white">
-        Fetching image
-      </li> -->
+      <!-- <Transition name="placeholder">
+        <li v-if="isFetchingImage" class="h-24 w-full bg-white">
+          Fetching image
+        </li>
+      </Transition> -->
       <li v-for="item in items" :key="item.id" class="h-24 w-full flex items-center p-4 gap-6 text-3xl">
         <img v-if="item.pictureURL" :src="item.pictureURL" :alt="`A random picture of a ${item.text}`" class="w-12 h-12">
         <div v-else class="w-12 h12 opacity-0" />
@@ -59,7 +61,6 @@ function addItem() {
 .list-leave-active {
   transition: all 0.4s cubic-bezier(.05,.76,.03,.89)
 }
-
 .list-enter-from
  {
   opacity: 0;
@@ -69,9 +70,6 @@ function addItem() {
   opacity: 0;
   transform: translate(1000px, 0);
 }
-
-/* 3. ensure leaving items are taken out of layout flow so that moving
-      animations can be calculated correctly. */
 .list-leave-active {
   position: absolute;
 }
