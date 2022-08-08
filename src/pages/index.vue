@@ -46,6 +46,7 @@ function addItem() {
         >
           x
         </button>
+        <!-- Why would I need components? -->
         <!-- <TodoItem :id="{item.id}" text="item.text" /> -->
       </li>
     </TransitionGroup>
