@@ -1,0 +1,20 @@
+$mdc-theme-primary: #212121;
+$mdc-theme-accent: #41b883;
+$mdc-theme-background: #ddd;
+
+$dark-mode-primary: #67360b;
+$dark-mode-on-primary: white;
+
+@use '@material/theme'  with (
+  $primary: #32b366,
+  $on-primary: white,
+);
+
+:root {
+    @media screen and (prefers-color-scheme: dark) {
+        --mdc-theme-primary: #{$dark-mode-primary};
+        --mdc-theme-on-primary: #{$dark-mode-on-primary};
+
+        background: #291202;
+    }
+}
