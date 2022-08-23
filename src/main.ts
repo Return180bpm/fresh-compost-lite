@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import routes from 'virtual:generated-pages'
 import { createPinia } from 'pinia'
+import vuetify from './plugins/vuetify'
 import App from './App.vue'
 
 import '@unocss/reset/tailwind.css'
@@ -16,4 +17,5 @@ const router = createRouter({
 const pinia = createPinia()
 app.use(router)
 app.use(pinia)
+app.use(vuetify)
 app.mount('#app')

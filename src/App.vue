@@ -1,5 +1,5 @@
 <template>
-  <main font-sans p="x-4 y-10" text="center gray-700 dark:gray-200" class="container mx-auto flex flex-col items-center justify-center">
+  <v-app>
     <router-view />
-  </main>
+  </v-app>
 </template>

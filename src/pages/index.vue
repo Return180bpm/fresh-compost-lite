@@ -15,42 +15,54 @@ function addItem() {
 </script>
 
 <template>
-  <div class="flex flex-col gap-16 max-w-screen-sm">
-    <div class="flex justify-center gap-2 h-36 p-0">
-      <input v-model="newItem" placeholder="I need to get..." class="h-full px-6 text-3xl bg-light-300 rounded-2xl" @keyup.enter="addItem">
-      <button
-        type="button"
-        class="h-full w-32 text-2xl text-gray-500 bg-lime-200 rounded-2xl"
-        @click="addItem"
-      >
-        Add
-      </button>
-    </div>
-    <TransitionGroup tag="ul" name="list" class="flex flex-col gap-4">
-      <!-- <Transition name="placeholder">
+  <v-main font-sans p="x-4 y-10" text="center gray-700 dark:gray-200" class="container mx-auto flex flex-col items-center justify-center">
+    <div class="flex flex-col gap-16 max-w-screen-sm">
+      <div class="flex justify-center gap-2 h-36 p-0">
+        <input v-model="newItem" placeholder="I need to get..." class="h-full px-6 text-3xl bg-light-300 rounded-2xl" @keyup.enter="addItem">
+        <button
+          type="button"
+          class="h-full w-32 text-2xl text-gray-500 bg-lime-200 rounded-2xl"
+          @click="addItem"
+        >
+          Add
+        </button>
+        <v-btn
+          flat
+          color="secondary"
+          size="x-large"
+          rounded
+          :ripple="false"
+          height="100"
+        >
+          Add
+        </v-btn>
+      </div>
+      <TransitionGroup tag="ul" name="list" class="flex flex-col gap-4">
+        <!-- <Transition name="placeholder">
         <li v-if="isFetchingImage" class="h-24 w-full bg-white">
           Fetching image
         </li>
       </Transition> -->
-      <li v-for="item in items" :key="item.id" class="h-24 w-full flex items-center p-4 gap-6 text-3xl">
-        <img v-if="item.pictureURL" :src="item.pictureURL" :alt="`A random picture of a ${item.text}`" class="w-12 h-12">
-        <div v-else class="w-12 h12 opacity-0" />
-        <input v-model="checkedItemsIds" :value="item.id" type="checkbox" class="w-12 h-12 rounded-2xl" @click="shoppingItemsStore.updateItem(item.id)">
-        <span class="text-gray-500">
-          {{ item.text }}
-        </span>
-        <button
-          type="button"
-          class="ml-auto px-6 py-4 rounded-2xl bg-light-200"
-          @click="shoppingItemsStore.removeItem(item.id)"
-        >
-          x
-        </button>
+        <li v-for="item in items" :key="item.id" class="h-24 w-full flex items-center p-4 gap-6 text-3xl">
+          <img v-if="item.pictureURL" :src="item.pictureURL" :alt="`A random picture of a ${item.text}`" class="w-12 h-12">
+          <div v-else class="w-12 h12 opacity-0" />
+          <input v-model="checkedItemsIds" :value="item.id" type="checkbox" class="w-12 h-12 rounded-2xl" @click="shoppingItemsStore.updateItem(item.id)">
+          <span class="text-gray-500">
+            {{ item.text }}
+          </span>
+          <button
+            type="button"
+            class="ml-auto px-6 py-4 rounded-2xl bg-light-200"
+            @click="shoppingItemsStore.removeItem(item.id)"
+          >
+            x
+          </button>
         <!-- Why would I need components? -->
         <!-- <TodoItem :id="{item.id}" text="item.text" /> -->
-      </li>
-    </TransitionGroup>
-  </div>
+        </li>
+      </TransitionGroup>
+    </div>
+  </v-main>
 </template>
 
 <style>
