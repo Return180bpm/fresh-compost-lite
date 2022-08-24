@@ -25,9 +25,6 @@ function addItem() {
       >
         Add
       </button>
-      <mcw-button raised>
-        click me
-      </mcw-button>
     </div>
     <TransitionGroup tag="ul" name="list" class="flex flex-col gap-4">
       <!-- <Transition name="placeholder">
@@ -58,9 +55,7 @@ function addItem() {
   </div>
 </template>
 
-<style lang="scss">
-@use "../styles";
-
+<style>
 .list-move,
 .list-enter-active
  {
