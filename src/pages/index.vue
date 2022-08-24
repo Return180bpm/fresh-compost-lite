@@ -27,12 +27,9 @@ function addItem() {
           Add
         </button>
         <v-btn
-          flat
           color="secondary"
           size="x-large"
-          rounded
-          :ripple="false"
-          height="100"
+          rounded="lg"
         >
           Add
         </v-btn>

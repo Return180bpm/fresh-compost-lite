@@ -5,6 +5,7 @@ import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Components from 'unplugin-vue-components/vite'
+
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 import Vuetify from 'vite-plugin-vuetify'
@@ -13,6 +14,12 @@ export default defineConfig({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
+    },
+  },
+  server: {
+    fs: {
+      // Allow serving files from one level up to the project root
+      allow: ['..'],
     },
   },
   plugins: [
@@ -46,7 +53,10 @@ export default defineConfig({
     // https://github.com/antfu/unocss
     // see unocss.config.ts for config
     Unocss(),
-    Vuetify({}),
+    Vuetify({
+      autoImport: true,
+      styles: 'expose',
+    }),
   ],
 
   // https://github.com/vitest-dev/vitest
