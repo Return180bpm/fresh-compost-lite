@@ -69,7 +69,7 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
 
   const isFetchingImage = ref(false)
   async function addItem(text: string) {
-    const { data, isFetching, execute }: { data: Ref<UnsplashResponse | null>; isFetching: Ref<boolean>; execute: () => Promise<any> } = useFetchUnsplashSearch(`photos?per_page=1&orientation=squarish&query=${text}`, {
+    const { data, isFetching, execute }: { data: Ref<UnsplashResponse | null>; isFetching: Ref<boolean>; execute: () => Promise<any> } = useFetchUnsplashSearch(`photos?per_page=1&orientation=squarish&content_filter=high&query=${text}`, {
       immediate: false,
     },
     ).json()
@@ -89,6 +89,19 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
         myUrl = data!.value!.urls!.thumb
       }
       else {
+        // not sure if requesting smaller width makes a difference in perf
+        //
+        // function spliceSlice(str: string, index: number, count: number, add: string) {
+        //   // We cannot pass negative indexes directly to the 2nd slicing operation.
+        //   if (index < 0) {
+        //     index = str.length + index
+        //     if (index < 0)
+        //       index = 0
+        //   }
+
+        //   return str.slice(0, index) + (add || '') + str.slice(index + count)
+        // }
+        // myUrl = `${spliceSlice(data!.value!.results[0].urls.thumb, -3, 999, '60')}`
         myUrl = data!.value!.results[0].urls.thumb
       }
     }

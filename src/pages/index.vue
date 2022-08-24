@@ -17,10 +17,10 @@ function addItem() {
 <template>
   <div class="flex flex-col gap-16 max-w-screen-sm">
     <div class="flex justify-center gap-2 h-36 p-0">
-      <input v-model="newItem" placeholder="I need to get..." class="h-full px-6 text-3xl bg-light-300 rounded-2xl" @keyup.enter="addItem">
+      <input v-model="newItem" placeholder="I need to get..." class="h-full px-6 text-3xl bg-light-200 rounded-2xl border-1 border-stone-400" @keyup.enter="addItem">
       <button
         type="button"
-        class="h-full w-32 text-2xl text-gray-500 bg-lime-200 rounded-2xl"
+        class="h-full w-32 text-2xl text-stone-6 bg-lime-200 rounded-2xl"
         @click="addItem"
       >
         Add
@@ -36,7 +36,7 @@ function addItem() {
         </li>
       </Transition> -->
       <li v-for="item in items" :key="item.id" class="h-24 w-full flex items-center p-4 gap-6 text-3xl">
-        <img v-if="item.pictureURL" :src="item.pictureURL" :alt="`A random picture of a ${item.text}`" class="w-12 h-12">
+        <img v-if="item.pictureURL" :src="item.pictureURL" :alt="`A random picture of a ${item.text}`" class="w-12 h-12 rounded-xl">
         <div v-else class="w-12 h12 opacity-0" />
         <input v-model="checkedItemsIds" :value="item.id" type="checkbox" class="w-12 h-12 rounded-2xl" @click="shoppingItemsStore.updateItem(item.id)">
         <span class="text-gray-500">
@@ -44,10 +44,12 @@ function addItem() {
         </span>
         <button
           type="button"
-          class="ml-auto px-6 py-4 rounded-2xl bg-light-200"
+          class="grid place-items-center ml-auto w-16 h-16 rounded-full text-stone-6 bg-rose-1"
           @click="shoppingItemsStore.removeItem(item.id)"
         >
-          x
+          <span>
+            x
+          </span>
         </button>
         <!-- Why would I need components? -->
         <!-- <TodoItem :id="{item.id}" text="item.text" /> -->
