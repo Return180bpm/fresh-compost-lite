@@ -47,9 +47,12 @@ export default defineConfig({
     Unocss({
       theme: {
         colors: {
-          baby: '#FDFFFA',
-          softgreen: '#94F9BC',
-          dark: '#0f100f',
+          soft: {
+            baby: '#FDFFFA',
+            green: '#94F9BC',
+            dark: '#0f100f',
+            grey: '#818075',
+          },
         },
       },
     }),
