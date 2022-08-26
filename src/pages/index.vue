@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useShoppingItemsStore } from '~/stores/shoppingItems'
 
 const shoppingItemsStore = useShoppingItemsStore()
-const { items, checkedItemsIds, isFetchingImage } = storeToRefs(shoppingItemsStore)
+const { items, checkedItemsIds } = storeToRefs(shoppingItemsStore)
 const newItem = ref('')
 function addItem() {
   if (!newItem.value)
@@ -32,8 +32,6 @@ function addItem() {
         </li>
       </Transition> -->
       <li v-for="item in items" :key="item.id" class="h-24 w-full flex items-center p-4 gap-6 text-xl sm:text-2xl">
-        <img v-if="item.pictureURL" :src="item.pictureURL" :alt="`A random picture of a ${item.text}`" class="w-12 h-12 rounded-xl">
-        <div v-else class="w-12 h12 opacity-0" />
         <input v-model="checkedItemsIds" :value="item.id" type="checkbox" class="w-12 h-12 rounded-2xl" @click="shoppingItemsStore.updateItem(item.id)">
         <span class="text-gray-500">
           {{ item.text }}
