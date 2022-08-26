@@ -44,7 +44,15 @@ export default defineConfig({
 
     // https://github.com/antfu/unocss
     // see unocss.config.ts for config
-    Unocss(),
+    Unocss({
+      theme: {
+        colors: {
+          baby: '#FDFFFA',
+          softgreen: '#94F9BC',
+          dark: '#0f100f',
+        },
+      },
+    }),
   ],
 
   // https://github.com/vitest-dev/vitest
