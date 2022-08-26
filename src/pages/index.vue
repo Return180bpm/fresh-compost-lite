@@ -17,36 +17,20 @@ function addItem() {
 <template>
   <div class="flex flex-col gap-16 max-w-screen-sm">
     <div class="flex justify-center gap-2 h-20 sm:h-36 p-0">
-      <input v-model="newItem" placeholder="I need to get..." class="grow-1 h-full px-6 border-box text-xl sm:text-3xl border-b-20 border-b-softgreen" @keyup.enter="addItem">
+      <input v-model="newItem" placeholder="I need to get..." class="grow-1 px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @keyup.enter="addItem">
       <button
-        class="h-full min-w-20 sm:w-36 text-5xl sm:text-6xl text-softgreen font-900 border-4 border-softgreen rounded-full"
+        class="h-full min-w-20 sm:w-36 text-5xl sm:text-6xl text-soft-green font-900 border-4 border-soft-green rounded-full"
         @click="addItem"
       >
         +
       </button>
     </div>
     <TransitionGroup tag="ul" name="list" class="flex flex-col gap-4">
-      <!-- <Transition name="placeholder">
-        <li v-if="isFetchingImage" class="h-24 w-full bg-white">
-          Fetching image
-        </li>
-      </Transition> -->
-      <li v-for="item in items" :key="item.id" class="h-24 w-full flex items-center p-4 gap-6 text-xl sm:text-2xl">
-        <input v-model="checkedItemsIds" :value="item.id" type="checkbox" class="w-12 h-12 rounded-2xl" @click="shoppingItemsStore.updateItem(item.id)">
-        <span class="text-gray-500">
-          {{ item.text }}
+      <li v-for="item in items" :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 text-xl sm:text-2xl">
+        <span class="">
+          {{ item.name }}
         </span>
-        <button
-          type="button"
-          class="grid place-items-center ml-auto min-w-16 w-16 h-16 rounded-full text-stone-6 bg-rose-1"
-          @click="shoppingItemsStore.removeItem(item.id)"
-        >
-          <span>
-            x
-          </span>
-        </button>
-        <!-- Why would I need components? -->
-        <!-- <TodoItem :id="{item.id}" text="item.text" /> -->
+        <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12 rounded-full" @click="shoppingItemsStore.updateItem(item.id)">
       </li>
     </TransitionGroup>
   </div>
