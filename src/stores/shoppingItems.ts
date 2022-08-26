@@ -12,20 +12,17 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
     {
       id: 0,
       name: 'tomatos',
-      isChecked: false,
-      pictureURL: '',
+      isChecked: true,
     },
     {
       id: 1,
       name: 'tomatoes',
       isChecked: false,
-      pictureURL: '',
     },
     {
       id: 2,
       name: 'ketchup',
-      isChecked: false,
-      pictureURL: '',
+      isChecked: true,
     },
   ])
   const lastId = ref(Math.max(...items.value.map(item => item.id)))
