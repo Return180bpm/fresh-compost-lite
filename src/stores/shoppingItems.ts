@@ -31,7 +31,6 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
   const lastId: Ref<number> = useLocalStorage('offthedome-lastId', INIT_LAST_ID)
 
   const indexOfItem = (id: number) => items.value.findIndex((item: Item) => item.id === id)
-  const checkedItemsIds = computed(() => items.value.filter(item => item.isChecked === true).map(item => String(item.id)))
 
   function addItem(name: string) {
     items.value.unshift({
@@ -51,5 +50,5 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
       items.value[i].isChecked = !items.value[i].isChecked
   }
 
-  return { items, checkedItemsIds, addItem, removeItem, updateItem }
+  return { items, addItem, removeItem, updateItem }
 })
