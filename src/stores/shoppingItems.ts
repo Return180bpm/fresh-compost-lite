@@ -7,34 +7,35 @@ interface Item {
   name: string
   isChecked: boolean
 }
+const INIT_ITEMS = [
+  {
+    id: 0,
+    name: 'tomatos',
+    isChecked: true,
+  },
+  {
+    id: 1,
+    name: 'tomatoes',
+    isChecked: false,
+  },
+  {
+    id: 2,
+    name: 'ketchup',
+    isChecked: true,
+  },
+]
+const INIT_LAST_ID = 2
+
 export const useShoppingItemsStore = defineStore('shoppingItems', () => {
-  const items: Ref<Item[]> = useLocalStorage('shopping-items', [
-    {
-      id: 0,
-      name: 'tomatos',
-      isChecked: true,
-    },
-    {
-      id: 1,
-      name: 'tomatoes',
-      isChecked: false,
-    },
-    {
-      id: 2,
-      name: 'ketchup',
-      isChecked: true,
-    },
-  ])
-  const lastId = ref(Math.max(...items.value.map(item => item.id)))
-  function nextId() {
-    return ++lastId.value
-  }
+  const items: Ref<Item[]> = useLocalStorage('offthedome-items', INIT_ITEMS)
+  const lastId: Ref<number> = useLocalStorage('offthedome-lastId', INIT_LAST_ID)
+
   const indexOfItem = (id: number) => items.value.findIndex((item: Item) => item.id === id)
   const checkedItemsIds = computed(() => items.value.filter(item => item.isChecked === true).map(item => String(item.id)))
 
   function addItem(name: string) {
     items.value.unshift({
-      id: nextId(),
+      id: ++lastId.value,
       name,
       isChecked: false,
     })
