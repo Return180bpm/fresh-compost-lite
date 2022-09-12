@@ -5,19 +5,22 @@ import { useShoppingItemsStore } from '~/stores/shoppingItems'
 const shoppingItemsStore = useShoppingItemsStore()
 const { items } = storeToRefs(shoppingItemsStore)
 const newItem = ref('')
+const input = ref<HTMLInputElement | null>(null)
 function addItem() {
   if (!newItem.value)
     return
 
   shoppingItemsStore.addItem(newItem.value)
   newItem.value = ''
+
+  input.value?.focus()
 }
 </script>
 
 <template>
   <div class="flex flex-col gap-16 max-w-screen-sm">
     <div class="flex justify-center gap-2 h-20 sm:h-36 p-0">
-      <input v-model="newItem" placeholder="I need to get..." class="grow-1 px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @keyup.enter="addItem">
+      <input ref="input" v-model="newItem" placeholder="I need to get..." class="grow-1 px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @keyup.enter="addItem">
       <button
         class="h-full min-w-20 sm:w-36 text-5xl sm:text-6xl text-soft-green font-900 border-4 border-soft-green rounded-full"
         @click="addItem"
