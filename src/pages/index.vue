@@ -39,7 +39,7 @@ function addItem() {
         <span class="">
           {{ item.name }}
         </span>
-        <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12 rounded-full" @click="() => { shoppingItemsStore.updateItem(item.id), shoppingItemsStore.removeItem(item.id) }">
+        <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12 rounded-full" @click="() => { shoppingItemsStore.updateItem(item.id) }">
       </li>
     </TransitionGroup>
   </div>
