@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useShoppingItemsStore } from '~/stores/shoppingItems'
 
 const shoppingItemsStore = useShoppingItemsStore()
-const { items } = storeToRefs(shoppingItemsStore)
+const { checkedItems, uncheckedItems } = storeToRefs(shoppingItemsStore)
 const newItem = ref('')
 const input = ref<HTMLInputElement | null>(null)
 function addItem() {
@@ -28,18 +28,25 @@ function addItem() {
         +
       </button>
     </div>
-    <TransitionGroup tag="ul" name="list" class="flex flex-col gap-4 text-xl sm:text-2xl">
-      <li v-if="items.length === 0" class="p-8 rounded-3xl border-1 border-soft-grey text-soft-grey italic">
+    <TransitionGroup tag="ul" name="list" class="flex flex-col items-center gap-4 text-xl sm:text-2xl">
+      <li v-if="uncheckedItems.length === 0" key="empty-list" class="p-8 rounded-3xl border-1 border-soft-grey text-soft-grey italic">
         <p class="mb-4">
           📜 Your list is empty.
         </p>
         <p>Yummy things You could add: 🥬🥝🥑</p>
       </li>
-      <li v-for="item in items" v-else :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 ">
+      <li v-for="item in uncheckedItems" v-else :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 ">
         <span class="">
           {{ item.name }}
         </span>
-        <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12 rounded-full" @click="() => { shoppingItemsStore.updateItem(item.id) }">
+        <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12 rounded-full" @click="() => { shoppingItemsStore.checkItem(item.id) }">
+      </li>
+      <hr v-if="checkedItems.length > 0" key="list-separator" class="w-50 text-soft-grey my-16">
+      <li v-for="item in checkedItems" :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 ">
+        <span class="">
+          {{ item.name }}
+        </span>
+        <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12 rounded-full" @click="() => { shoppingItemsStore.uncheckItem(item.id) }">
       </li>
     </TransitionGroup>
   </div>

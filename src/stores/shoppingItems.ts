@@ -30,28 +30,43 @@ export const useShoppingItemsStore = defineStore('shoppingItems', () => {
   // const itemsWithDefaults: Ref<Item[]> = useLocalStorage('offthedome-items', INIT_ITEMS)
   // const lastIdWithDefaults: Ref<number> = useLocalStorage('offthedome-lastId', INIT_LAST_ID)
 
-  const items: Ref<Item[]> = useLocalStorage('offthedome-items', [])
+  const checkedItems: Ref<Item[]> = useLocalStorage('offthedome-checkedItems', [])
+  const uncheckedItems: Ref<Item[]> = useLocalStorage('offthedome-uncheckedItems', [])
   const lastId: Ref<number> = useLocalStorage('offthedome-lastId', 0)
 
-  const indexOfItem = (id: number) => items.value.findIndex((item: Item) => item.id === id)
-
   function addItem(name: string) {
-    items.value.unshift({
+    uncheckedItems.value.unshift({
       id: ++lastId.value,
       name,
       isChecked: false,
     })
   }
-  function removeItem(id: number) {
-    const i = indexOfItem(id)
-    if (i > -1)
-      items.value.splice(i, 1)
+  // function removeItem(id: number) {
+  // const i = indexOfItem(id)
+  // if (i > -1)
+  //   items.value.splice(i, 1)
+  // }
+
+  function checkItem(id: number) {
+    const indexOfItem = uncheckedItems.value.findIndex((item: Item) => item.id === id)
+    const _item = uncheckedItems.value[indexOfItem]
+
+    if (indexOfItem > -1) {
+      uncheckedItems.value[indexOfItem].isChecked = true
+      uncheckedItems.value.splice(indexOfItem, 1)
+      checkedItems.value.unshift(_item)
+    }
   }
-  function updateItem(id: number) {
-    const i = indexOfItem(id)
-    if (i > -1)
-      items.value[i].isChecked = !items.value[i].isChecked
+  function uncheckItem(id: number) {
+    const indexOfItem = checkedItems.value.findIndex((item: Item) => item.id === id)
+    const _item = checkedItems.value[indexOfItem]
+
+    if (indexOfItem > -1) {
+      checkedItems.value[indexOfItem].isChecked = false
+      checkedItems.value.splice(indexOfItem, 1)
+      uncheckedItems.value.unshift(_item)
+    }
   }
 
-  return { items, addItem, removeItem, updateItem }
+  return { uncheckedItems, checkedItems, addItem, checkItem, uncheckItem }
 })
