@@ -7,28 +7,31 @@ interface Item {
   name: string
   isChecked: boolean
 }
-const INIT_ITEMS = [
-  {
-    id: 0,
-    name: 'tomatos',
-    isChecked: true,
-  },
-  {
-    id: 1,
-    name: 'tomatoes',
-    isChecked: false,
-  },
-  {
-    id: 2,
-    name: 'ketchup',
-    isChecked: true,
-  },
-]
-const INIT_LAST_ID = 2
+// const INIT_ITEMS = [
+//   {
+//     id: 0,
+//     name: 'tomatos',
+//     isChecked: true,
+//   },
+//   {
+//     id: 1,
+//     name: 'tomatoes',
+//     isChecked: false,
+//   },
+//   {
+//     id: 2,
+//     name: 'ketchup',
+//     isChecked: true,
+//   },
+// ]
+// const INIT_LAST_ID = 2
 
 export const useShoppingItemsStore = defineStore('shoppingItems', () => {
-  const items: Ref<Item[]> = useLocalStorage('offthedome-items', INIT_ITEMS)
-  const lastId: Ref<number> = useLocalStorage('offthedome-lastId', INIT_LAST_ID)
+  // const itemsWithDefaults: Ref<Item[]> = useLocalStorage('offthedome-items', INIT_ITEMS)
+  // const lastIdWithDefaults: Ref<number> = useLocalStorage('offthedome-lastId', INIT_LAST_ID)
+
+  const items: Ref<Item[]> = useLocalStorage('offthedome-items', [])
+  const lastId: Ref<number> = useLocalStorage('offthedome-lastId', 0)
 
   const indexOfItem = (id: number) => items.value.findIndex((item: Item) => item.id === id)
 
