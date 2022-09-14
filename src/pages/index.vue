@@ -28,7 +28,7 @@ function addItem() {
         +
       </button>
     </div>
-    <TransitionGroup tag="ul" name="list" class="flex flex-col items-center gap-4 text-xl sm:text-2xl">
+    <TransitionGroup tag="ul" name="unchecked-items" class="flex flex-col items-center gap-4 text-xl sm:text-2xl">
       <li v-if="uncheckedItems.length === 0" key="empty-list" class="p-8 rounded-3xl border-1 border-soft-grey text-soft-grey italic">
         <p class="mb-4">
           📜 Your list is empty.
@@ -41,6 +41,8 @@ function addItem() {
         </span>
         <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12" @click="() => { shoppingItemsStore.checkItem(item.id) }">
       </li>
+    </TransitionGroup>
+    <TransitionGroup tag="ul" name="checked-items" class="flex flex-col items-center gap-4 text-xl sm:text-2xl">
       <hr v-if="checkedItems.length > 0" key="list-separator" class="w-50 text-soft-grey my-16">
       <li v-for="item in checkedItems" :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 ">
         <span class="">
@@ -53,24 +55,24 @@ function addItem() {
 </template>
 
 <style>
-.list-move,
-.list-enter-active
+.checked-items-move,
+.checked-items-enter-active
  {
   transition: all 0.4s cubic-bezier(0.1, 0.8, 0.1, 1);
 }
-.list-leave-active {
+.checked-items-leave-active {
   transition: all 0.4s cubic-bezier(.05,.76,.03,.89)
 }
-.list-enter-from
+.checked-items-enter-from
  {
   opacity: 0;
   transform: translate(0, -100px);
 }
-.list-leave-to {
+.checked-items-leave-to {
   opacity: 0;
   transform: translate(100px, 0);
 }
-.list-leave-active {
+.checked-items-leave-active {
   position: absolute;
 }
 </style>
