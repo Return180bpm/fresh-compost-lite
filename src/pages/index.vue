@@ -28,7 +28,7 @@ function addItem() {
         +
       </button>
     </div>
-    <TransitionGroup tag="ul" name="list" class="flex flex-col items-center gap-4 text-xl sm:text-2xl">
+    <ul tag="ul" name="list" class="flex flex-col items-center gap-4 text-xl sm:text-2xl">
       <li v-if="uncheckedItems.length === 0" key="empty-list" class="p-8 rounded-3xl border-1 border-soft-grey text-soft-grey italic">
         <p class="mb-4">
           📜 Your list is empty.
@@ -48,7 +48,7 @@ function addItem() {
         </span>
         <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12" @click="() => { shoppingItemsStore.uncheckItem(item.id) }">
       </li>
-    </TransitionGroup>
+    </ul>
   </div>
 </template>
 
