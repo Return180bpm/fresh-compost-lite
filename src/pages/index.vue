@@ -39,14 +39,14 @@ function addItem() {
         <span class="">
           {{ item.name }}
         </span>
-        <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12 rounded-full" @click="() => { shoppingItemsStore.checkItem(item.id) }">
+        <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12" @click="() => { shoppingItemsStore.checkItem(item.id) }">
       </li>
       <hr v-if="checkedItems.length > 0" key="list-separator" class="w-50 text-soft-grey my-16">
       <li v-for="item in checkedItems" :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 ">
         <span class="">
           {{ item.name }}
         </span>
-        <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12 rounded-full" @click="() => { shoppingItemsStore.uncheckItem(item.id) }">
+        <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12" @click="() => { shoppingItemsStore.uncheckItem(item.id) }">
       </li>
     </TransitionGroup>
   </div>
