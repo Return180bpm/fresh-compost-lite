@@ -10,3 +10,13 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy: "default-src self"
+    Content-Security-Policy-Report-Only: "default-src self"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options: "nosniff"
+    Referrer-Policy: "no-referrer-when-downgrade"
+    Permissions-Policy: "accelerometer=(),autoplay=(),camera=(),encrypted-media=(),fullscreen=(self),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),midi=(),payment=(),sync-xhr=(),usb=(),xr-spatial-tracking=()"
