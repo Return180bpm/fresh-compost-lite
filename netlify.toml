@@ -14,7 +14,10 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'"
+    Content-Security-Policy = '''
+    default-src "self",
+    font-src https://fonts.gstatic.com
+    '''
     Content-Security-Policy-Report-Only = "default-src 'self'"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
