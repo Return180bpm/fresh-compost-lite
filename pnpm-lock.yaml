@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@antfu/eslint-config': ^0.25.2
   '@iconify-json/carbon': ^1.1.9
+  '@tarekraafat/autocomplete.js': ^10.2.7
   '@types/node': ^18.11.9
   '@unocss/reset': ^0.44.7
   '@vitejs/plugin-vue': ^3.2.0
@@ -25,6 +26,7 @@ specifiers:
   vue-tsc: ^0.39.5
 
 dependencies:
+  '@tarekraafat/autocomplete.js': 10.2.7
   '@vueuse/core': 9.4.0_vue@3.2.41
   pinia: 2.0.23_l7r24p6nevbtlimqmqcwa3ouhu
   vue: 3.2.41
@@ -431,6 +433,10 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
+
+  /@tarekraafat/autocomplete.js/10.2.7:
+    resolution: {integrity: sha512-iE+dnXI8/LrTaSORrnNdSyXg/bFCbCpz/R5GUdB3ioW+9PVEhglxNcSDQNeCXtrbRG0kOBFUd4unEiwcmqyn8A==}
+    dev: false
 
   /@tootallnate/once/2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
