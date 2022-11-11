@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useFocus } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useFuse } from '@vueuse/integrations/useFuse'
 import type { UseFuseOptions } from '@vueuse/integrations/useFuse'
@@ -9,6 +11,8 @@ const shoppingItemsStore = useShoppingItemsStore()
 const { checkedItems, uncheckedItems } = storeToRefs(shoppingItemsStore)
 const newItem = ref('')
 const input = ref<HTMLInputElement | null>(null)
+const { focused: inputFocus } = useFocus(input)
+
 function addItem() {
   if (!newItem.value)
     return
@@ -35,8 +39,28 @@ const { results } = useFuse(newItem, allItems, autocompleteOptions)
 
 <template>
   <div class="flex flex-col gap-16 max-w-screen-sm">
-    <div class="flex justify-center gap-2 h-20 sm:h-36 p-0">
-      <input ref="input" v-model="newItem" placeholder="I need to get..." class="grow-1 px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @keyup.enter="addItem">
+    <div class="flex justify-center items-end gap-2 h-20 sm:h-36 p-0">
+      <div class="relative h-full">
+        <input ref="input" v-model="newItem" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @keyup.enter="addItem">
+        <div v-if="inputFocus" class="absolute left-0 w-full p-4 flex border-1">
+          <p v-if="newItem.length === 0" class="foo">
+            Start typing to see suggestions
+          </p>
+          <ul v-else class="w-full">
+            <li v-for="result in results" :key="result.item.id" class=" w-full flex justify-between items-center px-6">
+              <span class="">
+                {{ result.item.name }}
+              </span>
+              <span v-if="result.item.isChecked === true" class="foo">
+                ✓
+              </span>
+              <span v-else class="foo">
+                ⃝
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
       <button
         class="h-full min-w-20 sm:w-36 text-5xl sm:text-6xl text-soft-green font-900 border-4 border-soft-green rounded-full"
         @click="addItem"
@@ -45,9 +69,6 @@ const { results } = useFuse(newItem, allItems, autocompleteOptions)
       </button>
     </div>
 
-    <div class="flex">
-      {{ results }}
-    </div>
     <div v-if="uncheckedItems.length === 0" class="p-8 rounded-3xl border-1 border-soft-grey text-soft-grey italic">
       <p class="mb-4">
         📜 Nothing on your list yet.
