@@ -23,12 +23,14 @@ const autocompleteOptions = computed<UseFuseOptions<Item>>(() => ({
   fuseOptions: {
     keys: ['name'],
     isCaseSensitive: false,
-    threshold: 1,
+    threshold: 0.5,
+    minMatchCharLength: 2,
   },
-  resultLimit: 3,
+
   matchAllWhenSearchEmpty: false,
 }))
-const { results } = useFuse(newItem, [...checkedItems.value, ...uncheckedItems.value], autocompleteOptions)
+const allItems = computed<Item[]>(() => [...checkedItems.value, ...uncheckedItems.value])
+const { results } = useFuse(newItem, allItems, autocompleteOptions)
 </script>
 
 <template>
