@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.5.0",
+    "@vueuse/integrations": "^9.5.0",
+    "fuse.js": "^6.6.2",
     "pinia": "^2.0.23",
+    "useFuse": "link:@vueuse/integrations/useFuse",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },

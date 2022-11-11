@@ -8,7 +8,9 @@ specifiers:
   '@vitejs/plugin-vue': ^3.2.0
   '@vue/test-utils': ^2.2.1
   '@vueuse/core': ^9.5.0
+  '@vueuse/integrations': ^9.5.0
   eslint: ^8.27.0
+  fuse.js: ^6.6.2
   jsdom: ^20.0.2
   pinia: ^2.0.23
   pnpm: ^7.15.0
@@ -17,6 +19,7 @@ specifiers:
   unocss: ^0.44.7
   unplugin-auto-import: ^0.10.3
   unplugin-vue-components: ^0.21.2
+  useFuse: link:@vueuse/integrations/useFuse
   vite: ^3.2.3
   vite-plugin-pages: ^0.25.0
   vitest: ^0.19.1
@@ -26,7 +29,10 @@ specifiers:
 
 dependencies:
   '@vueuse/core': 9.5.0_vue@3.2.45
+  '@vueuse/integrations': 9.5.0_fuse.js@6.6.2+vue@3.2.45
+  fuse.js: 6.6.2
   pinia: 2.0.23_zwu2zepfy3m6u2gunxlolp35gi
+  useFuse: link:@vueuse/integrations/useFuse
   vue: 3.2.45
   vue-router: 4.1.6_vue@3.2.45
 
@@ -901,6 +907,53 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+
+  /@vueuse/integrations/9.5.0_fuse.js@6.6.2+vue@3.2.45:
+    resolution: {integrity: sha512-YhxQQOpoZ6QPMbfKXXssgIG+hkDymKsDUbUofzjfvuxyVjKq9/BtV4mnIcCGUjTSm0R7k/sMiucRFrcokiwL7A==}
+    peerDependencies:
+      async-validator: '*'
+      axios: '*'
+      change-case: '*'
+      drauu: '*'
+      focus-trap: '*'
+      fuse.js: '*'
+      idb-keyval: '*'
+      jwt-decode: '*'
+      nprogress: '*'
+      qrcode: '*'
+      universal-cookie: '*'
+    peerDependenciesMeta:
+      async-validator:
+        optional: true
+      axios:
+        optional: true
+      change-case:
+        optional: true
+      drauu:
+        optional: true
+      focus-trap:
+        optional: true
+      fuse.js:
+        optional: true
+      idb-keyval:
+        optional: true
+      jwt-decode:
+        optional: true
+      nprogress:
+        optional: true
+      qrcode:
+        optional: true
+      universal-cookie:
+        optional: true
+    dependencies:
+      '@vueuse/core': 9.5.0_vue@3.2.45
+      '@vueuse/shared': 9.5.0_vue@3.2.45
+      fuse.js: 6.6.2
+      vue-demi: 0.13.11_vue@3.2.45
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
 
   /@vueuse/metadata/9.5.0:
     resolution: {integrity: sha512-4M1AyPZmIv41pym+K5+4wup3bKuYebbH8w8BROY1hmT7rIwcyS4tEL+UsGz0Hiu1FCOxcoBrwtAizc0YmBJjyQ==}
@@ -2411,6 +2464,11 @@ packages:
   /functions-have-names/1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
     dev: true
+
+  /fuse.js/6.6.2:
+    resolution: {integrity: sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==}
+    engines: {node: '>=10'}
+    dev: false
 
   /gauge/4.0.4:
     resolution: {integrity: sha512-f9m+BEN5jkg6a0fZjleidjN51VE1X+mPFQ2DJ0uv1V39oCLCbsGe6yjbBnp7eK7z/+GAon99a3nHuqbuuthyPg==}
