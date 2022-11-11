@@ -1,12 +1,8 @@
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
 import type { Ref } from 'vue'
+import type { Item } from '~/types'
 
-interface Item {
-  id: number
-  name: string
-  isChecked: boolean
-}
 // const INIT_ITEMS = [
 //   {
 //     id: 0,

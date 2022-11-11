@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { useFuse } from '@vueuse/integrations/useFuse'
+import type { UseFuseOptions } from '@vueuse/integrations/useFuse'
 import { useShoppingItemsStore } from '~/stores/shoppingItems'
+import type { Item } from '~/types'
 
 const shoppingItemsStore = useShoppingItemsStore()
 const { checkedItems, uncheckedItems } = storeToRefs(shoppingItemsStore)
@@ -15,6 +18,17 @@ function addItem() {
 
   input.value?.focus()
 }
+
+const autocompleteOptions = computed<UseFuseOptions<Item>>(() => ({
+  fuseOptions: {
+    keys: ['name'],
+    isCaseSensitive: false,
+    threshold: 1,
+  },
+  resultLimit: 3,
+  matchAllWhenSearchEmpty: false,
+}))
+const { results } = useFuse(newItem, [...checkedItems.value, ...uncheckedItems.value], autocompleteOptions)
 </script>
 
 <template>
@@ -29,6 +43,9 @@ function addItem() {
       </button>
     </div>
 
+    <div class="flex">
+      {{ results }}
+    </div>
     <div v-if="uncheckedItems.length === 0" class="p-8 rounded-3xl border-1 border-soft-grey text-soft-grey italic">
       <p class="mb-4">
         📜 Nothing on your list yet.
