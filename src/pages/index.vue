@@ -50,6 +50,9 @@ const resultsClean = computed(() => [...new Map(results.value.map(fuseResult =>
             Start typing to see suggestions
           </p>
           <ul v-else class="w-full">
+            <li class="w-full flex justify-start px-6">
+              Add <span class="font-bold">&nbsp;{{ inputText }}&nbsp; </span> to list
+            </li>
             <li v-for="result in resultsClean" :key="result.id" class=" w-full flex justify-between items-center px-6">
               <span class="">
                 {{ result.name }}
@@ -65,7 +68,7 @@ const resultsClean = computed(() => [...new Map(results.value.map(fuseResult =>
         </div>
       </div>
       <button
-        class="h-full min-w-20 sm:w-36 text-5xl sm:text-6xl text-soft-green font-900 border-4 border-soft-green rounded-full"
+        class="h-full min-w-20 sm:w-36 text-5xl sm:text-6xl text-soft-green font-bold border-4 border-soft-green rounded-full"
         @click="addItem"
       >
         +
