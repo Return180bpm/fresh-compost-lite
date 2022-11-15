@@ -27,7 +27,7 @@ const autocompleteOptions = computed<UseFuseOptions<Item>>(() => ({
   fuseOptions: {
     keys: ['name'],
     isCaseSensitive: false,
-    threshold: 0.5,
+    threshold: 0.4,
     minMatchCharLength: 2,
   },
 
@@ -35,6 +35,9 @@ const autocompleteOptions = computed<UseFuseOptions<Item>>(() => ({
 }))
 const allItems = computed<Item[]>(() => [...checkedItems.value, ...uncheckedItems.value])
 const { results } = useFuse(inputText, allItems, autocompleteOptions)
+// const resTEST = results.value.map(fuseResult => fuseResult.item)
+const resultsClean = computed(() => [...new Map(results.value.map(fuseResult =>
+  [fuseResult.item.name, fuseResult.item])).values()])
 </script>
 
 <template>
@@ -42,16 +45,16 @@ const { results } = useFuse(inputText, allItems, autocompleteOptions)
     <div class="flex justify-center items-end gap-2 h-20 sm:h-36 p-0">
       <div class="relative h-full">
         <input ref="input" :value="inputText" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value" @keyup.enter="addItem">
-        <div v-if="inputFocus" class="absolute left-0 w-full p-4 flex border-1">
+        <div v-if="inputFocus" class="absolute left-0 w-full p-4 flex bg-white border-1">
           <p v-if="inputText.length === 0" class="foo">
             Start typing to see suggestions
           </p>
           <ul v-else class="w-full">
-            <li v-for="result in results" :key="result.item.id" class=" w-full flex justify-between items-center px-6">
+            <li v-for="result in resultsClean" :key="result.id" class=" w-full flex justify-between items-center px-6">
               <span class="">
-                {{ result.item.name }}
+                {{ result.name }}
               </span>
-              <span v-if="result.item.isChecked === true" class="foo">
+              <span v-if="result.isChecked === true" class="foo">
                 ✓
               </span>
               <span v-else class="foo">
