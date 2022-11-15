@@ -9,16 +9,16 @@ import type { Item } from '~/types'
 
 const shoppingItemsStore = useShoppingItemsStore()
 const { checkedItems, uncheckedItems } = storeToRefs(shoppingItemsStore)
-const newItem = ref('')
+const inputText = ref('')
 const input = ref<HTMLInputElement | null>(null)
 const { focused: inputFocus } = useFocus(input)
 
 function addItem() {
-  if (!newItem.value)
+  if (!inputText.value)
     return
 
-  shoppingItemsStore.addItem(newItem.value)
-  newItem.value = ''
+  shoppingItemsStore.addItem(inputText.value)
+  inputText.value = ''
 
   input.value?.focus()
 }
@@ -34,16 +34,16 @@ const autocompleteOptions = computed<UseFuseOptions<Item>>(() => ({
   matchAllWhenSearchEmpty: false,
 }))
 const allItems = computed<Item[]>(() => [...checkedItems.value, ...uncheckedItems.value])
-const { results } = useFuse(newItem, allItems, autocompleteOptions)
+const { results } = useFuse(inputText, allItems, autocompleteOptions)
 </script>
 
 <template>
   <div class="flex flex-col gap-16 max-w-screen-sm">
     <div class="flex justify-center items-end gap-2 h-20 sm:h-36 p-0">
       <div class="relative h-full">
-        <input ref="input" v-model="newItem" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @keyup.enter="addItem">
+        <input ref="input" :value="inputText" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value" @keyup.enter="addItem">
         <div v-if="inputFocus" class="absolute left-0 w-full p-4 flex border-1">
-          <p v-if="newItem.length === 0" class="foo">
+          <p v-if="inputText.length === 0" class="foo">
             Start typing to see suggestions
           </p>
           <ul v-else class="w-full">
