@@ -13,11 +13,11 @@ const inputText = ref('')
 const input = ref<HTMLInputElement | null>(null)
 const { focused: inputFocus } = useFocus(input)
 
-function addItem() {
-  if (!inputText.value)
+function addItem(itemText: string) {
+  if (!itemText)
     return
 
-  shoppingItemsStore.addItem(inputText.value)
+  shoppingItemsStore.addItem(itemText)
   inputText.value = ''
 
   input.value?.focus()
@@ -46,16 +46,16 @@ const resultsCheckedItemsUnique = computed(() => [...new Map(resultsCheckedItems
   <div class="flex flex-col gap-16 max-w-screen-sm">
     <div class="flex justify-center items-end gap-2 h-20 sm:h-36 p-0">
       <div class="relative h-full">
-        <input ref="input" :value="inputText" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value" @keyup.enter="addItem">
+        <input ref="input" :value="inputText" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value" @keyup.enter="addItem(inputText)">
         <div v-if="inputFocus" class="absolute left-0 w-full p-4 flex bg-white border-1">
           <p v-if="inputText.length === 0" class="foo">
             Start typing to see suggestions
           </p>
           <ul v-else class="w-full text-2xl">
-            <li class="w-full h-20 flex justify-start items-center px-6">
+            <li class="w-full h-20 flex justify-start items-center px-6 cursor-pointer hover:bg-soft-green" @mousedown.stop.prevent @click="addItem(inputText)">
               Add <span class="font-bold">&nbsp;{{ inputText }}&nbsp; </span> to list
             </li>
-            <li v-for="result in [...resultsUncheckedItemsUnique, ...resultsCheckedItemsUnique]" :key="result.id" class="w-full h-20 flex justify-between items-center px-6" :class="{ 'text-soft-grey': !result.isChecked }">
+            <li v-for="result in [...resultsUncheckedItemsUnique, ...resultsCheckedItemsUnique]" :key="result.id" class="w-full h-20 flex justify-between items-center px-6 cursor-pointer hover:bg-soft-green" :class="{ 'text-soft-grey': !result.isChecked }" @mousedown.stop.prevent @click="addItem(result.name)">
               <span class="">
                 {{ result.name }}
               </span>
@@ -71,7 +71,7 @@ const resultsCheckedItemsUnique = computed(() => [...new Map(resultsCheckedItems
       </div>
       <button
         class="h-full min-w-20 sm:w-36 text-5xl sm:text-6xl text-soft-green font-bold border-4 border-soft-green rounded-full"
-        @click="addItem"
+        @click="addItem(inputText)"
       >
         +
       </button>
