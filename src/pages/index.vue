@@ -34,8 +34,7 @@ const autocompleteOptions: UseFuseOptions<Item> = {
 }
 const allItems = computed<Item[]>(() => [...checkedItems.value, ...uncheckedItems.value])
 const { results } = useFuse(inputText, allItems, autocompleteOptions)
-// const resTEST = results.value.map(fuseResult => fuseResult.item)
-const resultsClean = computed(() => [...new Map(results.value.map(fuseResult =>
+const resultsUnique = computed(() => [...new Map(results.value.map(fuseResult =>
   [fuseResult.item.name, fuseResult.item])).values()])
 </script>
 
@@ -52,7 +51,7 @@ const resultsClean = computed(() => [...new Map(results.value.map(fuseResult =>
             <li class="w-full flex justify-start px-6">
               Add <span class="font-bold">&nbsp;{{ inputText }}&nbsp; </span> to list
             </li>
-            <li v-for="result in resultsClean" :key="result.id" class=" w-full flex justify-between items-center px-6">
+            <li v-for="result in resultsUnique" :key="result.id" class=" w-full flex justify-between items-center px-6">
               <span class="">
                 {{ result.name }}
               </span>
