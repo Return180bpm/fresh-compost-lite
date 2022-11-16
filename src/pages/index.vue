@@ -32,9 +32,13 @@ const autocompleteOptions: UseFuseOptions<Item> = {
   },
   matchAllWhenSearchEmpty: false,
 }
-const allItems = computed<Item[]>(() => [...checkedItems.value, ...uncheckedItems.value])
-const { results } = useFuse(inputText, allItems, autocompleteOptions)
-const resultsUnique = computed(() => [...new Map(results.value.map(fuseResult =>
+// const allItems = computed<Item[]>(() => [...checkedItems.value, ...uncheckedItems.value])
+const { results: resultsUncheckedItems } = useFuse(inputText, uncheckedItems.value, autocompleteOptions)
+const { results: resultsCheckedItems } = useFuse(inputText, checkedItems.value, autocompleteOptions)
+
+const resultsUncheckedItemsUnique = computed(() => [...new Map(resultsUncheckedItems.value.map(fuseResult =>
+  [fuseResult.item.name, fuseResult.item])).values()])
+const resultsCheckedItemsUnique = computed(() => [...new Map(resultsCheckedItems.value.map(fuseResult =>
   [fuseResult.item.name, fuseResult.item])).values()])
 </script>
 
@@ -51,7 +55,7 @@ const resultsUnique = computed(() => [...new Map(results.value.map(fuseResult =>
             <li class="w-full h-20 flex justify-start items-center px-6">
               Add <span class="font-bold">&nbsp;{{ inputText }}&nbsp; </span> to list
             </li>
-            <li v-for="result in resultsUnique" :key="result.id" class="w-full h-20 flex justify-between items-center px-6" :class="{ 'text-soft-grey': !result.isChecked }">
+            <li v-for="result in [...resultsUncheckedItemsUnique, ...resultsCheckedItemsUnique]" :key="result.id" class="w-full h-20 flex justify-between items-center px-6" :class="{ 'text-soft-grey': !result.isChecked }">
               <span class="">
                 {{ result.name }}
               </span>
