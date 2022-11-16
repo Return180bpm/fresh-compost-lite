@@ -23,16 +23,15 @@ function addItem() {
   input.value?.focus()
 }
 
-const autocompleteOptions = computed<UseFuseOptions<Item>>(() => ({
+const autocompleteOptions: UseFuseOptions<Item> = {
   fuseOptions: {
     keys: ['name'],
     isCaseSensitive: false,
     threshold: 0.3,
     minMatchCharLength: 2,
   },
-
   matchAllWhenSearchEmpty: false,
-}))
+}
 const allItems = computed<Item[]>(() => [...checkedItems.value, ...uncheckedItems.value])
 const { results } = useFuse(inputText, allItems, autocompleteOptions)
 // const resTEST = results.value.map(fuseResult => fuseResult.item)
