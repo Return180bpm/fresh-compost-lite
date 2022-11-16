@@ -43,7 +43,7 @@ const resultsCheckedItemsUnique = computed(() => [...new Map(resultsCheckedItems
 </script>
 
 <template>
-  <div class="flex flex-col gap-16 max-w-screen-sm">
+  <div class="flex flex-col gap-12 max-w-screen-sm">
     <div class="flex justify-center items-end gap-2 h-20 sm:h-36 p-0">
       <div class="relative h-full">
         <input ref="input" :value="inputText" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value" @keyup.enter="addItem(inputText)">
@@ -84,7 +84,7 @@ const resultsCheckedItemsUnique = computed(() => [...new Map(resultsCheckedItems
       <p>Yummy things You could add: 🥬🥝🥑</p>
     </div>
 
-    <ul v-else tag="ul" name="list" class="flex flex-col items-center gap-4 text-xl sm:text-2xl">
+    <ul v-else tag="ul" name="list" class="flex flex-col items-center gap-2 text-xl sm:text-2xl">
       <li v-for="item in uncheckedItems" :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 ">
         <span class="">
           {{ item.name }}
@@ -93,7 +93,7 @@ const resultsCheckedItemsUnique = computed(() => [...new Map(resultsCheckedItems
       </li>
     </ul>
 
-    <ul v-if="checkedItems.length > 0" class="flex flex-col items-center gap-4 text-xl sm:text-2xl">
+    <ul v-if="checkedItems.length > 0" class="flex flex-col items-center text-xl sm:text-2xl">
       <hr class="w-50 text-soft-grey my-16">
       <li v-for="item in checkedItems" :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 ">
         <span class="">
