@@ -27,7 +27,7 @@ const autocompleteOptions = computed<UseFuseOptions<Item>>(() => ({
   fuseOptions: {
     keys: ['name'],
     isCaseSensitive: false,
-    threshold: 0.4,
+    threshold: 0.3,
     minMatchCharLength: 2,
   },
 
