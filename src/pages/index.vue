@@ -47,18 +47,18 @@ const resultsUnique = computed(() => [...new Map(results.value.map(fuseResult =>
           <p v-if="inputText.length === 0" class="foo">
             Start typing to see suggestions
           </p>
-          <ul v-else class="w-full">
-            <li class="w-full flex justify-start px-6">
+          <ul v-else class="w-full text-2xl">
+            <li class="w-full h-20 flex justify-start items-center px-6">
               Add <span class="font-bold">&nbsp;{{ inputText }}&nbsp; </span> to list
             </li>
-            <li v-for="result in resultsUnique" :key="result.id" class=" w-full flex justify-between items-center px-6">
+            <li v-for="result in resultsUnique" :key="result.id" class="w-full h-20 flex justify-between items-center px-6" :class="{ 'text-soft-grey': !result.isChecked }">
               <span class="">
                 {{ result.name }}
               </span>
               <span v-if="result.isChecked === true" class="foo">
                 ✓
               </span>
-              <span v-else class="foo">
+              <span v-else class="">
                 ⃝
               </span>
             </li>
