@@ -12,6 +12,7 @@ const { checkedItems, uncheckedItems } = storeToRefs(shoppingItemsStore)
 const inputText = ref('')
 const input = ref<HTMLInputElement | null>(null)
 const { focused: inputFocus } = useFocus(input)
+const selectedResultIndex = ref(-1)
 
 function addItem(itemText: string) {
   if (!itemText)
@@ -40,22 +41,63 @@ const resultsUncheckedItemsUnique = computed(() => [...new Map(resultsUncheckedI
   [fuseResult.item.name, fuseResult.item])).values()])
 const resultsCheckedItemsUnique = computed(() => [...new Map(resultsCheckedItems.value.map(fuseResult =>
   [fuseResult.item.name, fuseResult.item])).values()])
+const allResultsUnique = computed(() => [...resultsUncheckedItemsUnique.value, ...resultsCheckedItemsUnique.value])
+
+watch(inputFocus, (currentFocus) => {
+  if (currentFocus === false)
+    selectedResultIndex.value = -1
+})
+watch(inputText, () => {
+  selectedResultIndex.value = -1
+})
+
+onKeyStroke('ArrowDown', (e) => {
+  if (!inputFocus.value)
+    return
+
+  e.preventDefault()
+
+  if (inputText.value.length > 0)
+    selectedResultIndex.value = (selectedResultIndex.value + 1) % (allResultsUnique.value.length + 1)
+})
+onKeyStroke('ArrowUp', (e) => {
+  if (!inputFocus.value)
+    return
+
+  e.preventDefault()
+
+  if (inputText.value.length > 0)
+    selectedResultIndex.value--
+  if (selectedResultIndex.value < 0)
+    selectedResultIndex.value = allResultsUnique.value.length
+})
+onKeyStroke('Enter', (e) => {
+  if (!inputFocus.value || selectedResultIndex.value === -1)
+    return
+
+  e.preventDefault()
+
+  if (selectedResultIndex.value === 0)
+    addItem(inputText.value)
+  else
+    addItem(allResultsUnique.value[selectedResultIndex.value - 1].name)
+})
 </script>
 
 <template>
   <div class="flex flex-col gap-12 max-w-screen-sm">
     <div class="flex justify-center items-end gap-2 h-20 sm:h-36 p-0">
       <div class="relative h-full">
-        <input ref="input" :value="inputText" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value" @keyup.enter="addItem(inputText)">
-        <div v-if="inputFocus" class="absolute left-0 w-full p-4 flex bg-white border-1">
-          <p v-if="inputText.length === 0" class="foo">
+        <input ref="input" :value="inputText" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value">
+        <div v-if="inputFocus" class="absolute left-0 w-full p-4 flex bg-white text-xl sm:text-2xl border-1">
+          <p v-if="inputText.length === 0" class="text-soft-grey italic">
             Start typing to see suggestions
           </p>
           <ul v-else class="w-full text-2xl">
-            <li class="w-full h-20 flex justify-start items-center px-6 cursor-pointer hover:bg-soft-green" @mousedown.stop.prevent @click="addItem(inputText)">
+            <li class="w-full h-20 flex justify-start items-center px-6 cursor-pointer hover:bg-soft-green" :class="{ 'bg-soft-green': selectedResultIndex === 0 }" @mousedown.stop.prevent @click="addItem(inputText)">
               Add <span class="font-bold">&nbsp;{{ inputText }}&nbsp; </span> to list
             </li>
-            <li v-for="result in [...resultsUncheckedItemsUnique, ...resultsCheckedItemsUnique]" :key="result.id" class="w-full h-20 flex justify-between items-center px-6 cursor-pointer hover:bg-soft-green" :class="{ 'text-soft-grey': !result.isChecked }" @mousedown.stop.prevent @click="addItem(result.name)">
+            <li v-for="result, index in allResultsUnique" :key="result.id" class="w-full h-20 flex justify-between items-center px-6 cursor-pointer hover:bg-soft-green" :class="{ 'text-soft-grey': !result.isChecked, 'bg-soft-green': index === selectedResultIndex - 1 }" @mousedown.stop.prevent @click="addItem(result.name)">
               <span class="">
                 {{ result.name }}
               </span>
