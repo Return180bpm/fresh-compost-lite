@@ -33,14 +33,15 @@ const autocompleteOptions: UseFuseOptions<Item> = {
   },
   matchAllWhenSearchEmpty: false,
 }
+const RESULT_LIMIT = 3
 // const allItems = computed<Item[]>(() => [...checkedItems.value, ...uncheckedItems.value])
 const { results: resultsUncheckedItems } = useFuse(inputText, uncheckedItems.value, autocompleteOptions)
 const { results: resultsCheckedItems } = useFuse(inputText, checkedItems.value, autocompleteOptions)
 
 const resultsUncheckedItemsUnique = computed(() => [...new Map(resultsUncheckedItems.value.map(fuseResult =>
-  [fuseResult.item.name, fuseResult.item])).values()])
+  [fuseResult.item.name, fuseResult.item])).values()].slice(0, RESULT_LIMIT))
 const resultsCheckedItemsUnique = computed(() => [...new Map(resultsCheckedItems.value.map(fuseResult =>
-  [fuseResult.item.name, fuseResult.item])).values()])
+  [fuseResult.item.name, fuseResult.item])).values()].slice(0, RESULT_LIMIT))
 const allResultsUnique = computed(() => [...resultsUncheckedItemsUnique.value, ...resultsCheckedItemsUnique.value])
 
 watch(inputFocus, (currentFocus) => {
