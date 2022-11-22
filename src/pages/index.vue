@@ -89,11 +89,11 @@ onKeyStroke('Enter', (e) => {
     <div class="flex justify-center items-end gap-2 h-20 sm:h-36 p-0">
       <div class="relative h-full">
         <input ref="input" :value="inputText" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value">
-        <div v-if="inputFocus" class="absolute left-0 w-full p-4 flex bg-white text-xl sm:text-2xl border-1">
-          <p v-if="inputText.length === 0" class="text-soft-grey italic">
+        <div v-if="inputFocus && inputText.length > 0" class="absolute left-0 w-full p-4 flex bg-white text-xl sm:text-2xl border-1">
+          <!-- <p v-if="inputText.length === 0" class="text-soft-grey italic">
             Start typing to see suggestions
-          </p>
-          <ul v-else class="w-full text-2xl">
+          </p> -->
+          <ul class="w-full text-2xl">
             <li class="w-full h-20 flex justify-start items-center px-6 cursor-pointer hover:bg-soft-green" :class="{ 'bg-soft-green': selectedResultIndex === 0 }" @mousedown.stop.prevent @click="addItem(inputText)">
               Add <span class="font-bold">&nbsp;{{ inputText }}&nbsp; </span> to list
             </li>
