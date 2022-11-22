@@ -72,12 +72,12 @@ onKeyStroke('ArrowUp', (e) => {
     selectedResultIndex.value = allResultsUnique.value.length
 })
 onKeyStroke('Enter', (e) => {
-  if (!inputFocus.value || selectedResultIndex.value === -1)
+  if (!inputFocus.value)
     return
 
   e.preventDefault()
 
-  if (selectedResultIndex.value === 0)
+  if (selectedResultIndex.value <= 0)
     addItem(inputText.value)
   else
     addItem(allResultsUnique.value[selectedResultIndex.value - 1].name)
