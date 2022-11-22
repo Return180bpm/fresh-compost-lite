@@ -1,4 +1,4 @@
-[offthedome.netlify.app](offthedome.netlify.app)
+[offthedome.netlify.app](https://offthedome.netlify.app/)
 
 ## What is this
 A simple app to help with grocery shopping. Intended for easy and fast use, optimized for mobile.
