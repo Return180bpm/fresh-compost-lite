@@ -86,10 +86,10 @@ onKeyStroke('Enter', (e) => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-10 max-w-screen-sm">
-    <div class="flex justify-center items-end gap-2 h-20 sm:h-36 p-0">
-      <div class="relative h-full">
-        <input ref="input" :value="inputText" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value">
+  <div id="layoutWrapper" class="h-screen grid grid-rows-[auto_1fr] gap-8">
+    <div id="inputAndButtonRow" class="w-full flex justify-center items-end gap-2 h-20 sm:h-36 p-0">
+      <div id="inputWrapper" class="grow-1 relative w-full h-full">
+        <input ref="input" :value="inputText" placeholder="I need to get..." class="w-full h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value">
         <div v-if="inputFocus && inputText.length > 0" class="absolute left-0 w-full p-4 flex bg-white text-xl sm:text-2xl border-1">
           <!-- <p v-if="inputText.length === 0" class="text-soft-grey italic">
             Start typing to see suggestions
@@ -113,24 +113,27 @@ onKeyStroke('Enter', (e) => {
         </div>
       </div>
       <button
-        class="h-full min-w-20 sm:w-36 text-5xl sm:text-6xl text-soft-green font-bold border-4 border-soft-green rounded-full"
+        class="min-w-20 sm:min-w-36 min-h-20 sm:min-h-36 text-5xl sm:text-6xl text-soft-green font-bold border-4 border-soft-green rounded-full"
         @click="addItem(inputText)"
       >
         +
       </button>
     </div>
 
-    <div v-if="uncheckedItems.length === 0" class="grid place-items-center w-full pt-8 rounded-3xl text-soft-grey">
-      <p class="mb-8 text-xl sm:text-2xl">
-        <!-- <span class="text-6xl">🦧</span> -->
-        Nothing to see here.
-      </p>
-      <p class="text-8xl sm:text-9xl">
-        🦧
-      </p>
+    <div v-if="uncheckedItems.length === 0" class="grid place-items-center  rounded-3xl text-soft-grey">
+      <div id="contentWrapper" class="flex flex-col items-center gap-2 w-full px-16">
+        <p class="text-8xl sm:text-9xl">
+          🦧
+        </p>
+        <hr class="w-full border-1 text-soft-grey">
+        <p class="text-xl sm:text-2xl mt-8">
+          <!-- <span class="text-6xl">🦧</span> -->
+          Nothing to see here
+        </p>
+      </div>
     </div>
 
-    <ul v-else tag="ul" name="list" class="flex flex-col items-center gap-2 text-xl sm:text-2xl">
+    <ul v-else tag="ul" name="list" class="w-full flex flex-col items-center gap-2 text-xl sm:text-2xl">
       <li v-for="item in uncheckedItems" :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 ">
         <span class="">
           {{ item.name }}
@@ -138,17 +141,17 @@ onKeyStroke('Enter', (e) => {
         <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12" @click="() => { shoppingItemsStore.checkItem(item.id) }">
       </li>
     </ul>
-
-    <ul v-if="checkedItems.length > 0" class="flex flex-col items-center text-xl sm:text-2xl">
-      <hr class="w-50 text-soft-grey my-16">
-      <li v-for="item in checkedItems" :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 ">
-        <span class="">
-          {{ item.name }}
-        </span>
-        <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12" @click="() => { shoppingItemsStore.uncheckItem(item.id) }">
-      </li>
-    </ul>
   </div>
+
+  <ul v-if="checkedItems.length > 0" class="w-full flex flex-col items-center text-xl sm:text-2xl">
+    <hr class="w-full text-soft-grey my-16">
+    <li v-for="item in checkedItems" :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 ">
+      <span class="">
+        {{ item.name }}
+      </span>
+      <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12" @click="() => { shoppingItemsStore.uncheckItem(item.id) }">
+    </li>
+  </ul>
 </template>
 
 <style>
