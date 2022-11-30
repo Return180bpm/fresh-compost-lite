@@ -148,12 +148,6 @@ onKeyStroke('Enter', (e) => {
         <input v-model="item.isChecked" :value="item.id" type="checkbox" class="w-12 h-12" @click="() => { shoppingItemsStore.uncheckItem(item.id) }">
       </li>
     </ul>
-    <hr class="h-2">
-    <div class="w-full flex justify-center">
-      <a href="https://github.com/Return180bpm/off-the-dome" class="i-carbon-logo-github w-24 h-24 text-soft-dark">
-        <!-- <span class="i-carbon-logo-github w-24 h-24 text-" /> -->
-      </a>
-    </div>
   </div>
 </template>
 
