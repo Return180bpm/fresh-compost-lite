@@ -15,7 +15,7 @@
   for = "/*"
   [headers.values]
     Content-Security-Policy = '''
-    default-src 'self'
+    default-src 'self';
     '''
     Content-Security-Policy-Report-Only = '''
     default-src 'self'
