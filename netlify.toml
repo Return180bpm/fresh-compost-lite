@@ -18,9 +18,6 @@
     default-src 'self';
     img-src 'self' data:;
     '''
-    Content-Security-Policy-Report-Only = '''
-    default-src 'self'
-    '''
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "no-referrer-when-downgrade"
