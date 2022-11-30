@@ -86,7 +86,7 @@ onKeyStroke('Enter', (e) => {
 </script>
 
 <template>
-  <div id="layoutWrapper" class="h-screen grid grid-rows-[auto_1fr] gap-8">
+  <div id="layoutWrapper" class="w-full h-screen grid grid-rows-[auto_1fr] gap-8">
     <div id="inputAndButtonRow" class="w-full flex justify-center items-end gap-2 h-20 sm:h-36 p-0">
       <div id="inputWrapper" class="grow-1 relative w-full h-full">
         <input ref="input" :value="inputText" placeholder="I need to get..." class="w-full h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value">
@@ -121,11 +121,11 @@ onKeyStroke('Enter', (e) => {
     </div>
 
     <div v-if="uncheckedItems.length === 0" class="grid place-items-center  rounded-3xl text-soft-grey">
-      <div id="contentWrapper" class="flex flex-col items-center gap-2 w-full px-16">
+      <div id="contentWrapper" class="flex flex-col items-center gap-2 w-full">
         <p class="text-8xl sm:text-9xl">
           🦧
         </p>
-        <hr class="w-full border-1 text-soft-grey">
+        <hr class="w-8/12 h-1 bg-soft-grey">
         <p class="text-xl sm:text-2xl mt-8">
           <!-- <span class="text-6xl">🦧</span> -->
           Nothing to see here
@@ -144,7 +144,7 @@ onKeyStroke('Enter', (e) => {
   </div>
 
   <ul v-if="checkedItems.length > 0" class="w-full flex flex-col items-center text-xl sm:text-2xl">
-    <hr class="w-full text-soft-grey my-16">
+    <hr class="w-full h-px bg-soft-grey my-16">
     <li v-for="item in checkedItems" :key="item.id" class="h-24 w-full flex justify-between items-center px-6 gap-6 ">
       <span class="">
         {{ item.name }}
