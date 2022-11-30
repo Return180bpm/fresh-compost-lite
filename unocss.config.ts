@@ -6,6 +6,7 @@ import {
   // transformerDirectives,
   // transformerVariantGroup,
 } from 'unocss'
+import presetWebFonts from '@unocss/preset-web-fonts'
 
 export default defineConfig({
   presets: [
@@ -14,6 +15,21 @@ export default defineConfig({
     presetIcons({
       scale: 1.2,
       warn: true,
+    }),
+    presetWebFonts({
+      provider: 'none',
+      fonts: {
+        verdana: [
+          {
+            name: 'Verdana',
+            // weights: ['400', '700'],
+            // italic: true,
+          },
+          {
+            name: 'sans-serif',
+          },
+        ],
+      },
     }),
   ],
   // transformers: [
