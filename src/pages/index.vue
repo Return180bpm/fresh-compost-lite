@@ -86,7 +86,7 @@ onKeyStroke('Enter', (e) => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-12 max-w-screen-sm">
+  <div class="flex flex-col gap-10 max-w-screen-sm">
     <div class="flex justify-center items-end gap-2 h-20 sm:h-36 p-0">
       <div class="relative h-full">
         <input ref="input" :value="inputText" placeholder="I need to get..." class="h-full px-6 pt-8  leading-snug text-xl sm:text-3xl border-b-10 border-b-soft-green" @input="event => inputText = (event!.target! as HTMLInputElement).value">
@@ -120,11 +120,14 @@ onKeyStroke('Enter', (e) => {
       </button>
     </div>
 
-    <div v-if="uncheckedItems.length === 0" class="p-8 rounded-3xl border-1 border-soft-grey text-soft-grey italic">
-      <p class="mb-4">
-        📜 Nothing on your list yet.
+    <div v-if="uncheckedItems.length === 0" class="grid place-items-center w-full pt-8 rounded-3xl text-soft-grey">
+      <p class="mb-8 text-xl sm:text-2xl">
+        <!-- <span class="text-6xl">🦧</span> -->
+        Nothing to see here.
       </p>
-      <p>Yummy things You could add: 🥬🥝🥑</p>
+      <p class="text-8xl sm:text-9xl">
+        🦧
+      </p>
     </div>
 
     <ul v-else tag="ul" name="list" class="flex flex-col items-center gap-2 text-xl sm:text-2xl">
